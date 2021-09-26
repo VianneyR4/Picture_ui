@@ -13,7 +13,7 @@ I wanted to build a website(or any other client with User Interface) and web ser
 ## Project setup
 
 1. Install `nodejs` if you don't have it installed ( check it in the `terminal`, type `$ node -v` or `$ npm -v`)
-2. Clone the project from the terminal (type `$ git clone https://github.com/VianneyR4/Picture_api.git`) or you can download a ZIP file
+2. Clone the project from the terminal (type `$ git clone https://github.com/VianneyR4/Picture_ui.git`) or you can download a ZIP file
 3. Then open the main directory of the project then type in the `terminal` the below cmd
 
 ```
