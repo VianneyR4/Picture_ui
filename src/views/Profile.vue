@@ -81,15 +81,15 @@
                       >
                         23
                       </span>
-                      <span class="text-sm text-blueGray-400">Upload</span>
+                      <span class="text-sm text-blueGray-400">Uploads</span>
                     </div>
                     <div class="lg:mr-4 p-3 text-center">
                       <span
                         class="text-xl font-bold block uppercase tracking-wide text-blueGray-600"
                       >
-                        2021-09-25
+                      
                       </span>
-                      <span class="text-sm text-blueGray-400">Created at</span>
+                      <span class="text-sm text-white"> ---------------</span>
                     </div>
                   </div>
                 </div>

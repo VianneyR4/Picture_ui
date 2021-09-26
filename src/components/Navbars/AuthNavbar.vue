@@ -74,8 +74,12 @@ import PagesDropdown from "@/components/Dropdowns/PagesDropdown.vue";
 export default {
   data() {
     return {
-      navbarOpen: false
+      navbarOpen: false,
+      user: {},
     };
+  },
+  mounted(){
+    this.user = localStorage.getItem("user");
   },
   created(){
     //this.checkUserSession();
