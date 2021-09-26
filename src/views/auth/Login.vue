@@ -12,7 +12,7 @@
                 <i class="fas fa-bell"></i>
               </span>
               <span class="inline-block align-middle mr-8">
-                <b class="capitalize">{{alertOpen==1?'Success: ':'Error: '}}</b> This is a red alert - check it out!
+                <b class="capitalize">{{alertOpen==1?'Success: ':'Error: '}}</b> {{ alertMessage }}
               </span>
               <button style="margin-right: 20px;" class="absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-6 outline-none focus:outline-none" v-on:click="closeAlert()">
                 <span>×</span>
@@ -59,7 +59,7 @@
                   type="email"
                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   placeholder="Email"
-                  required
+                  v-model="email"
                 />
               </div>
 
@@ -74,7 +74,7 @@
                   type="password"
                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   placeholder="Password"
-                  required
+                  v-model="password"
                 />
               </div>
               
@@ -82,12 +82,15 @@
 
               <div class="text-center mt-6">
                 <button
+                  v-if="!loader"
                   class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                  type="submit"
-                  @click="goTo('/landing')"
+                  type="button"
+                  @click="loginFunc()"
                 >
                   Sign In
                 </button>
+
+                <img v-if="loader" src="../../assets/img/loader.gif" width="50" alt="loader" style="margin-left: calc(50% - 25px)" />
               </div>
             </form>
           </div>
@@ -112,20 +115,48 @@
 import github from "@/assets/img/github.svg";
 import google from "@/assets/img/google.svg";
 
+import { login } from "../../api/login";
+
+import imgTest from "/Users/vianney.rwicha/Documents/Work/Ujat Care/UjatCare_test/static/uploads/8wRb12xIdZVsc2rTTm1t4gpU2rTCkVlo.jpg";
+
 export default {
   data() {
     return {
+      imgTest,
       github,
       google,
-      alertOpen: 1
+      alertOpen: null,
+      email: null,
+      password: null,
+      alertMessage: null,
+      loader: false,
     };
   },
   methods: {
     closeAlert: function(){
       this.alertOpen = null;
     },
-    goTo: function(path){
-      this.$router.push({ path: path })
+    goTo: function(val){
+      this.$router.push({ name: val })
+    },
+    loginFunc: function(){
+      this.loader = true;
+      login(this.email, this.password).then((result) => {
+        console.log("user_data", result);
+        if(result.status == 200){ this.alertOpen = 1; } 
+        else { this.alertOpen = 2; }
+        this.alertMessage = result.message
+        localStorage.setItem("user_fname", result.user.first_name);
+        localStorage.setItem("user_lname", result.user.last_name);
+        localStorage.setItem("user_email", result.user.email);
+        localStorage.setItem("token", result.token);
+        this.loader = false;
+        this.goTo("Landing");
+      })
+      .catch((err) =>{
+        console.log('ERROR: ', err);
+        this.loader = false;
+      })
     }
   }
 };

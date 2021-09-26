@@ -6,7 +6,7 @@
       ref="btnDropdownRef"
       v-on:click="toggleDropdown($event)"
     >
-      <span>Vianney</span> <span style="margin: 0 5px 0 5px;" class="uppercase">Rwicha</span>
+      <span>{{ user.fname }}</span> <span style="margin: 0 5px 0 5px;" class="uppercase">{{ user.lname }}</span>
 
       <span><i class="lg:text-blueGray-200 text-blueGray-400 fas fa-user-circle" style="margin: -2px -6px 0 5px; font-size: 30px" /></span>
     </a>
@@ -40,7 +40,17 @@ export default {
   data() {
     return {
       dropdownPopoverShow: false,
+      user: {},
     };
+  },
+  mounted(){
+    this.user = {
+      'fname': localStorage.getItem("user_fname"),
+      'lname': localStorage.getItem("user_lname"),
+      'email': localStorage.getItem("user_email"),
+      'token': localStorage.getItem("token"),
+    };
+    console.log(this.user);
   },
   methods: {
     toggleDropdown: function (event) {

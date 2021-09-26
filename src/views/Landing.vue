@@ -238,7 +238,11 @@ import FooterComponent from "@/components/Footers/FooterSmall.vue";
 export default {
   data() {
     return {
+      user: {},
     };
+  },
+  mounted(){
+    this.user = localStorage.getItem("user");
   },
   components: {
     Navbar,
