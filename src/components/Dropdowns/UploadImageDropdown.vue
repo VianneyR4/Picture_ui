@@ -120,13 +120,6 @@ export default {
     goTo: function(val){
       this.$router.push({ name: val })
     },
-    logout: function (){
-      localStorage.removeItem("user_fname");
-      localStorage.removeItem("user_lname");
-      localStorage.removeItem("user_email");
-      localStorage.removeItem("token");
-      this.$router.push({ name: "Login" })
-    },
     setImageFile(event) {           
       if (event.target.files.length > 0) {
         const file = event.target.files[0];
@@ -136,21 +129,25 @@ export default {
     },
     uploadImageFunc: function(){
       this.loader = true;
- 
-      uploadImage(this.User_token, this.title, this.description, this.file).then((result) => {
-        // console.log("Landing__images_data", result);
-        if (result.status == 200){
-          this.showModal = result.message;
-          // this.$emit('updateView');
-        } else {
-          this.showModal = result.message;
-        }
+      if (this.title!=null || this.description!=null, this.file!=null) {
+        uploadImage(this.User_token, this.title, this.description, this.file).then((result) => {
+          // console.log("Landing__images_data", result);
+          if (result.status == 200){
+            this.showModal = result.message;
+            // this.$emit('updateView');
+          } else {
+            this.showModal = result.message;
+          }
+          this.loader = false;
+        })
+        .catch((err) => {
+          console.log('ERROR__here__: ', err);
+          this.loader = false;
+        })
+      } else {
+        this.showModal = "Fill out all fealds pleas";
         this.loader = false;
-      })
-      .catch((err) => {
-        console.log('ERROR__here__: ', err);
-        this.loader = false;
-      })
+      }
     }
   },
 };
