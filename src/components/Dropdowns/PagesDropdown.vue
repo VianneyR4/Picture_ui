@@ -51,7 +51,6 @@ export default {
       'email': localStorage.getItem("user_email"),
       'token': localStorage.getItem("token"),
     };
-    console.log(this.user);
   },
   methods: {
     toggleDropdown: function (event) {

@@ -4,17 +4,56 @@ import axios from "axios";
 // import store from "../store"
 
 const API_URL = "http://127.0.0.1:3000/api/v1";
-// const SOURCE_URL = "file:///D:/Sonia/";
 
 
-// const configPostEndPoint = {
-//     headers: {
-//         'Content-type': "application/json",
-//         'Access-Control-Allow-Origin': "*"
-//     },
-//     mode: "no-cors"
-// };
+/**
+ * a function that allow the admin to be connected
+ * @param {*} token
+ * @param {*} title
+ * @param {*} description
+ * @param {*} file
+ */
 
+ export function uploadImage(token, title, description, file) {
+
+    let data = new FormData()
+
+    const configPostEndPoint = {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'Access-Control-Allow-Origin': "*",
+            Authorization: "Bearer "+ token,
+        },
+        mode: "no-cors"
+    };
+    const url = API_URL + `/images/upload`;
+
+    data.append('title', title);
+    data.append('description', description);
+    data.append('image', file);
+
+    return axios
+        .post(
+            url,
+            data,
+            configPostEndPoint
+        )
+        .then(result => {
+            let response = {
+                "status": result.data.error == undefined ? 200 : 400,
+                "message": result.data.error == undefined ? result.data.message : result.data.error,
+                "uploaded_data": result.data.error == undefined ? result.data.userId : null
+            }
+            
+            return response;
+        })
+        .catch(err => {
+            let response = {"message": err};
+            console.log(response);
+            return response;
+        })
+
+}
 
 /**
  * a function that allow the admin to be connected
