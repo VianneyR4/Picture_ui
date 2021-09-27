@@ -60,6 +60,7 @@
                     <button
                       class="bg-emerald-500 active:bg-emerald-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
                       type="button"
+                      @click="logout()"
                     >
                       Log out
                     </button>
@@ -71,7 +72,7 @@
                       <span
                         class="text-xl font-bold block uppercase tracking-wide text-blueGray-600"
                       >
-                        #22
+                        #{{ userProfileData.id }}
                       </span>
                       <span class="text-sm text-blueGray-400">User ID</span>
                     </div>
@@ -79,9 +80,9 @@
                       <span
                         class="text-xl font-bold block uppercase tracking-wide text-blueGray-600"
                       >
-                        23
+                      
                       </span>
-                      <span class="text-sm text-blueGray-400">Uploads</span>
+                      <span class="text-sm text-white">---------</span>
                     </div>
                     <div class="lg:mr-4 p-3 text-center">
                       <span
@@ -98,7 +99,7 @@
                 <h3
                   class="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2"
                 >
-                  Jenna Stones
+                  {{ userProfileData.first_name }} {{ userProfileData.last_name }}
                 </h3>
                 <div
                   class="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase"
@@ -106,17 +107,17 @@
                   <i
                     class="fas fa-envelope-open mr-2 text-lg text-blueGray-400"
                   ></i>
-                  vrwicha@ujatcare.com
+                  {{ userProfileData.email }}
                 </div>
               </div>
               <div class="mt-10 py-10 border-t border-blueGray-200 text-center">
                 <div class="flex flex-wrap justify-center">
                   <div class="w-full lg:w-9/12 px-4">
                     <p class="mb-4 text-lg leading-relaxed text-blueGray-700">
-                      About me: Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem architecto temporibus, 
+                      About me: Lorem ipsum dolor sit amet consectetur  elit. Autem architecto temporibus, 
                       dolorem deserunt perferendis, blanditiis officiis voluptatibus soluta porro consectetur culpa 
                       voluptate eaque ducimus a totam! Aut, accusantium. 
-                      Repellat incidunt iusto maiores in reprehenderit enim ab fugiat officia? Nesciunt at quae, 
+                      Repellat incidunt iusto maiores ab fugiat officia? Nesciunt at quae, 
                       tempora sapiente reprehenderit mollitia dignissimos ullam reiciendis. Suscipit, eum?
                     </p>
                   </div>
@@ -160,16 +161,47 @@
 import Navbar from "@/components/Navbars/AuthNavbar.vue";
 import FooterComponent from "@/components/Footers/FooterSmall.vue";
 
+import { getProfile } from "../api/user";
 
 export default {
   data() {
     return {
+      userProfileData: {},
     };
   },
   components: {
     Navbar,
     FooterComponent,
   },
+  mounted(){
+    this.getProfileFunc(localStorage.getItem("token"));
+  },
+  methods: {
+    goTo: function(val){
+      this.$router.push({ name: val })
+    },
+    logout: function (){
+      localStorage.removeItem("user_fname");
+      localStorage.removeItem("user_lname");
+      localStorage.removeItem("user_email");
+      localStorage.removeItem("token");
+      this.$router.push({ name: "Login" })
+    },
+    getProfileFunc: function(token){
+      getProfile(token).then((result) => {
+        if (result.status==200){
+          this.userProfileData = result.profile;
+        } else {
+          this.$router.push({ name: "Login" })
+        }
+
+      })
+      .catch((err) => {
+        console.log('ERROR: ', err);
+        this.loader = false;
+      })
+    }
+  }
 };
 </script>
 
