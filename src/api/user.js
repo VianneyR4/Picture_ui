@@ -60,29 +60,29 @@ const configPostEndPoint = {
  * @param {*} token
  */
 
-// const getProfile = (token) => {
+ export function getProfile(token){
 
-//     const url = API_URL + "/admin/profile";
+    const url = API_URL + "/user/profile";
 
-//     return fetch(url, {
-//             headers: {
-//                 'Content-type': "application/json",
-//                 'Access-Control-Allow-Origin': "*",
-//                 authorization: token,
-//             }
-//         })
-//         .then(res => res.json())
-//         .then(data => {
-//             let response = {
-//                 "status": data.error == undefined ? 201 : 400,
-//                 "profile": data,
-//                 "message": data.error != undefined ? data.error : data.msg,
-//             }
+    return axios
+        .get(url,{
+            headers: {
+                'Content-type': "application/json",
+                'Access-Control-Allow-Origin': "*",
+                Authorization: "Bearer "+ token,
+            },
+            mode: "no-cors"
+        })
+        .then((result) => {
+            let response = {
+                "status": result.data.error == undefined ? 200 : 400,
+                "profile": result.data.error == undefined ? result.data.userData : null,
+                "message": result.data.error == undefined ? result.data.message : result.data.error,
+            }
+            return response;
+        })
+        .catch(err => {
+            console.log('ERROR: ', err);
+        })
 
-//             return response;
-//         })
-//         .catch(err => {
-//             console.log('ERROR: ', err);
-//         })
-
-// };
+}

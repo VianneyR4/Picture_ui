@@ -294,7 +294,6 @@ export default {
     };
   },
   mounted(){
-
     if (!this.mine){
       this.getImagesFunc(localStorage.getItem("token"), this.filter)
     } else {
@@ -306,6 +305,10 @@ export default {
     FooterComponent,
   },
   methods: {
+    // updateView: function(){
+    //   console.log("emit is working");
+    //   this.getImagesFunc(localStorage.getItem("token"), this.filter)
+    // },
     goTo: function(val){
       this.$router.push({ name: val })
     },
@@ -320,7 +323,6 @@ export default {
         } else {
           // alert(result.message);
           this.showModal=result.message;
-          // this.goTo("Login");
         }
 
         this.loader = false;
