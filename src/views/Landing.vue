@@ -204,6 +204,7 @@
       </section>
 
 
+
       <!-- ----------- my polygone ---------- -->
       <section class="pb-20 relative block bg-blueGray-800">
         <div
@@ -230,6 +231,49 @@
       <!-- ----------- end my polygone ---------- -->
     </main>
     <footer-component style="background: #1e293b" />
+
+
+
+
+      <!-- ---------------------modale session------------------ -->
+      
+      <div v-if="showModal!=null" class="opacity-25 fixed z-50" style="top: 0; height: 100vh; width: 100vw; background: #00000999">
+        <div class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+          <div class="relative w-auto my-6 mx-auto max-w-3xl" style="width: 100vw">
+            <!--content-->
+            <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none" style="width: 30%; margin: 10% auto">
+              <!--header-->
+              <div class="flex items-start justify-between px-6 py-3 border-b border-solid border-blueGray-200 rounded-t">
+                <h3 class="text-2xl font-semibold" style="margin: 5px 0 0">
+                  Invalid Session
+                </h3>
+                <button @click="showModal=null" class="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" v-on:click="toggleModal()">
+                  <span class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                    ×
+                  </span>
+                </button>
+              </div>
+              <!--body-->
+              <div class="relative p-6 flex-auto" style="padding: 15px 30px">
+                <p class="my-4 text-blueGray-500 text-lg leading-relaxed">
+                  {{ showModal }}
+                </p>
+              </div>
+              <!--footer-->
+              <div class="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b" style="padding: 6px 10px">
+                <!-- <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" v-on:click="toggleModal()">
+                  Close
+                </button> -->
+                <button @click="goTo('Login')" class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+                  Okay
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- -------------------end modale session---------------- -->
+
   </div>
 </template>
 <script>
@@ -247,6 +291,7 @@ export default {
       filterToDisplay: "Descending",
       mine: false,
       token: localStorage.getItem("token"),
+      showModal: null,
     };
   },
   mounted(){
@@ -269,13 +314,14 @@ export default {
       this.mine=false;
       this.loader = true;
       getAllImage(token, filter).then((result) => {
-        console.log("images_data", result);
+        // console.log("images_data", result);
         if (result.status == 200){
           this.all_Images = result.data;
           filter == 'asc' ? this.filterToDisplay='Ascending':this.filterToDisplay='Descending';
         } else {
-          alert(result.message);
-          this.goTo("Login");
+          // alert(result.message);
+          this.showModal=result.message;
+          // this.goTo("Login");
         }
 
         this.loader = false;
@@ -298,7 +344,7 @@ export default {
       this.mine=true;
       this.loader = true;
       getImageByUser(token, filter).then((result) => {
-        console.log("images_data", result);
+        // console.log("images_data", result);
         if (result.status == 200){
           this.all_Images = result.data;
           filter == 'asc' ? this.filterToDisplay='Ascending':this.filterToDisplay='Descending';
@@ -325,7 +371,7 @@ export default {
   grid-template-columns: 1fr 1fr;
 }
 .grid-images{
-  /* border: 1px solid grey; */
+  /* border: 1px solid #00000028; */
   display: grid;
   grid-template-columns: 4fr 3fr;
   width: 100%;
@@ -337,7 +383,7 @@ export default {
   padding: 0;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: -4px 5px 15px #0000002d;
+  box-shadow: -3px 4px 10px #0000001c;
 }
 .my-mage img{
   height: 100%;
