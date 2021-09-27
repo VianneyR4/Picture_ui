@@ -140,15 +140,19 @@ export default {
       this.loader = true;
       login(this.email, this.password).then((result) => {
         console.log("user_data", result);
-        if(result.status == 200){ this.alertOpen = 1; } 
-        else { this.alertOpen = 2; }
-        this.alertMessage = result.message
-        localStorage.setItem("user_fname", result.user.first_name);
-        localStorage.setItem("user_lname", result.user.last_name);
-        localStorage.setItem("user_email", result.user.email);
-        localStorage.setItem("token", result.token);
+        if(result.status == 200){ 
+          this.alertOpen = 1;  
+          localStorage.setItem("user_fname", result.user.first_name);
+          localStorage.setItem("user_lname", result.user.last_name);
+          localStorage.setItem("user_email", result.user.email);
+          localStorage.setItem("token", result.token);
+          this.alertMessage = result.message
+          this.goTo("Landing");
+        } else { 
+          this.alertOpen = 2; 
+          this.alertMessage = result.message
+        }
         this.loader = false;
-        this.goTo("Landing");
       })
       .catch((err) =>{
         console.log('ERROR: ', err);
