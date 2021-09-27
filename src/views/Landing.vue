@@ -198,6 +198,8 @@
             </div>
           </div>
 
+          <div v-if="all_Images" style="text-align: center; margin-bottom: 200px; font-size: 35px"> {{all_Images.length == 0 ? "Empty!": ""}}</div>
+
           <img v-if="loader" src="../assets/img/loader.gif" width="120" alt="loader" style="margin-left: calc(50% - 60px)" />
 
         </div>
