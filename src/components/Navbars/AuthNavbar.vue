@@ -51,17 +51,12 @@
         </ul>
 
         <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
-          <li class="flex items-center" >
+          <li class="flex items-center" style="margin-right: -15px">
             <PagesDropdown />
           </li>
 
           <li class="flex items-center">
-            <button
-              class="bg-white text-blueGray-700 active:bg-blueGray-50 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
-              type="button"
-            >
-              <i class="fas fa-arrow-alt-circle-up"></i> Upload image
-            </button>
+            <UploadImageDropdown />
           </li>
         </ul>
       </div>
@@ -71,6 +66,7 @@
 </template>
 <script>
 import PagesDropdown from "@/components/Dropdowns/PagesDropdown.vue";
+import UploadImageDropdown from "@/components/Dropdowns/UploadImageDropdown.vue";
 export default {
   data() {
     return {
@@ -95,6 +91,7 @@ export default {
   },
   components: {
     PagesDropdown,
+    UploadImageDropdown
   },
 };
 </script>

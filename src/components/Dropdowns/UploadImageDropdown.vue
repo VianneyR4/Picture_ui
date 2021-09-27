@@ -3,34 +3,29 @@
     <a
       class="lg:text-white lg:hover:text-blueGray-200 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-sm font-bold"
       href="#pablo"
-      ref="btnDropdownRef"
+      ref="btnDropdownRef2"
       v-on:click="toggleDropdown($event)"
     >
-      <span>{{ user.fname }}</span> <span style="margin: 0 5px 0 5px;" class="uppercase">{{ user.lname }}</span>
-
-      <span><i class="lg:text-blueGray-200 text-blueGray-400 fas fa-user-circle" style="margin: -2px -6px 0 5px; font-size: 30px" /></span>
+      <button class="bg-white text-blueGray-700 active:bg-blueGray-50 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150" type="button">
+        <i class="fas fa-arrow-alt-circle-up"></i> Upload image
+      </button>
     </a>
     <div
-      ref="popoverDropdownRef"
+      ref="popoverDropdownRef2"
       class="bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
       v-bind:class="{
         hidden: !dropdownPopoverShow,
         block: dropdownPopoverShow,
       }"
+      style="position: absolute"
     >
-      <router-link
-        to="/profile"
-        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-      >
-        Profile
-      </router-link>
-      <a
-        href="#"
-        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-        @click="logout()"
-      >
-        Log out
-      </a>
+
+      <div class="mb-3 pt-0">
+        <input type="file" placeholder="Regular Input" class="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm  outline-none focus:outline-none focus:shadow-outline w-full"/>
+      </div>
+      <button style="margin-left: 15px" class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+        Upload
+      </button>
     </div>
   </div>
 </template>
