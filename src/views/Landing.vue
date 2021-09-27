@@ -19,7 +19,7 @@
             <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
               <div class="pr-12">
                 <h1 class="text-white font-semibold text-5xl">
-                  {{ mine? 'Mine Only':'All Images'}} / {{ filterToDisplay }}
+                   {{ mine? 'Mine Only':'All Images'}} / {{ filterToDisplay }}
                 </h1>
                 <p class="mt-4 text-lg text-blueGray-200">
                   This is the line of the exact filter... Lorem ipsum dolor sit amet consectetur adipisicing elit. 
@@ -234,9 +234,7 @@
 
 
 
-
-      <!-- ---------------------modale session------------------ -->
-      
+      <!-- ---------------------modale session------------------ -->      
       <div v-if="showModal!=null" class="opacity-25 fixed z-50" style="top: 0; height: 100vh; width: 100vw; background: #00000999">
         <div class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
           <div class="relative w-auto my-6 mx-auto max-w-3xl" style="width: 100vw">
@@ -273,6 +271,7 @@
         </div>
       </div>
       <!-- -------------------end modale session---------------- -->
+
 
   </div>
 </template>
@@ -369,6 +368,7 @@ export default {
 .images-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  outline: none;
 }
 .grid-images{
   /* border: 1px solid #00000028; */
