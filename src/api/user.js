@@ -4,7 +4,6 @@ import axios from "axios";
 // import store from "../store"
 
 const API_URL = "http://127.0.0.1:3000/api/v1";
-// const SOURCE_URL = "file:///D:/Sonia/";
 
 
 const configPostEndPoint = {
