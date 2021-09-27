@@ -1,3 +1,7 @@
+## Deployed app: https://picture-frontend-app.herokuapp.com/
+
+Use this link to quickly test the application with `Integrated API`.
+
 # Picture API
 
 I wanted to build a website(or any other client with User Interface) and web service that will have 

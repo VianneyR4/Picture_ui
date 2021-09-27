@@ -17,6 +17,48 @@ const configPostEndPoint = {
 /**
  * a function that allow the admin to be connected
  * @param {*} email
+ * @param {*} first_name
+ * @param {*} last_name
+ * @param {*} password
+ */
+
+ export function registration(email, first_name, last_name, password) {
+
+    const bodyRequests = {
+        email: email,
+        first_name: first_name,
+        last_name: last_name,
+        password: password,
+    };
+
+    const url = API_URL + "/register";
+
+    return axios
+        .post(
+            url,
+            JSON.stringify(bodyRequests),
+            configPostEndPoint
+        )
+        .then(result => {
+            let response = {
+                "status": result.data.error == undefined ? 200 : 400,
+                "message": result.data.error == undefined ? result.data.message : result.data.error
+            }
+
+            return response;
+        })
+        .catch(err => {
+            console.log('ERROR: ', err);
+            let response = {'ERROR': err};
+            return response;
+        })
+
+}
+
+
+/**
+ * a function that allow the admin to be connected
+ * @param {*} email
  * @param {*} password
  */
 
