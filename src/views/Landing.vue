@@ -19,11 +19,11 @@
             <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
               <div class="pr-12">
                 <h1 class="text-white font-semibold text-5xl">
-                  All Images / Descending
+                  {{ mine? 'Mine Only':'All Images'}} / {{ filterToDisplay }}
                 </h1>
                 <p class="mt-4 text-lg text-blueGray-200">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                  Nesciunt excepturi sequi id quam ducimus enim porro voluptas beatae minus, 
+                  This is the line of the exact filter... Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                  Nesciunt excepturi sequi id voluptas beatae minus, 
                   voluptatem fugiat itaque deserunt.
                 </p>
               </div>
@@ -63,10 +63,10 @@
                   
                   <h6 class="text-xl font-semibold">Display All Images or Mine Only</h6><br/>
                   <p class="mt-2 mb-4 text-blueGray-500">
-                    <button class="text-emerald-500 bg-transparent border border-solid border-emerald-500 hover:bg-emerald-500 hover:text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+                    <button @click="getImagesFunc(token, filter)" :class="!mine? 'bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150':'text-emerald-500 bg-transparent border border-solid border-emerald-500 hover:bg-emerald-500 hover:text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'" type="button">
                       All Images
                     </button>
-                    <button class="text-emerald-500 bg-transparent border border-solid border-emerald-500 hover:bg-emerald-500 hover:text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+                    <button @click="getImageByUserFunc(token, filter)" :class="mine? 'bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150':'text-emerald-500 bg-transparent border border-solid border-emerald-500 hover:bg-emerald-500 hover:text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'" type="button">
                       Mine Only
                     </button>
                   </p>
@@ -84,7 +84,7 @@
                     sort by date of upload Descending
                   </p>
                   <p class="mt-2 mb-4 text-blueGray-500">
-                    <button class="text-emerald-500 bg-transparent border border-solid border-emerald-500 hover:bg-emerald-500 hover:text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+                    <button  @click="filterFunc('desc')" :class="filter=='desc'? 'bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150':'text-emerald-500 bg-transparent border border-solid border-emerald-500 hover:bg-emerald-500 hover:text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'" type="button">
                       Sort 'desc'
                     </button>
                   </p>
@@ -102,7 +102,7 @@
                     sort by date of upload Ascending
                   </p>
                   <p class="mt-2 mb-4 text-blueGray-500">
-                    <button class="text-emerald-500 bg-transparent border border-solid border-emerald-500 hover:bg-emerald-500 hover:text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+                    <button  @click="filterFunc('asc')" :class="filter=='asc'? 'bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150':'text-emerald-500 bg-transparent border border-solid border-emerald-500 hover:bg-emerald-500 hover:text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'" type="button">
                       Sort 'asc'
                     </button>
                   </p>
@@ -138,13 +138,13 @@
         <!-- ----------- end my polygone ---------- -->
 
         <div class="container mx-auto px-4">
-          <div class="images-container">
-            <div v-for="n in 10" :key="n" class="grid-images items-center flex flex-wrap">
+          <div v-if="!loader" class="images-container">
+            <div v-for="(image, n) in all_Images" :key="n" class="grid-images items-center flex flex-wrap">
               <div class="my-mage w-full ml-auto mr-auto px-4">
                 <img
                   alt="..."
                   class="max-w-full rounded-lg shadow-lg"
-                  src="https://images.unsplash.com/photo-1555212697-194d092e3b8f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+                  :src="'http://localhost:3000/'+image.image"
                 />
               </div>
               <div class="my-image-detail w-full ml-auto mr-auto px-4">
@@ -157,11 +157,9 @@
                     <br/><br/>
                   </div>
 
-                  <h3 class="text-4 font-semibold">A growing company</h3>
+                  <h3 class="text-4 font-semibold">#{{ image.id }} {{ image.title }}</h3>
                   <p class="mt-4 text-sm leading-relaxed text-blueGray-500">
-                    The extension comes with three pre-built pages to help you get
-                    started faster. You can change the text and images and you're
-                    good to go.
+                    {{ image.description }}
                   </p>
                   <ul class="list_contact_imag_user list-none mt-6">
                     <li class="py-2">
@@ -175,7 +173,7 @@
                         </div>
                         <div>
                           <h4 class="text-blueGray-500 text-sm ">
-                            Vianney Rwicha
+                            {{ image.User.first_name }}  <span style="text-transform: uppercase;">{{ image.User.last_name }}</span>
                           </h4>
                         </div>
                       </div>
@@ -190,7 +188,7 @@
                           </span>
                         </div>
                         <div>
-                          <h4 class="text-blueGray-500 text-sm ">vrwicha@ujatcare.com</h4>
+                          <h4 class="text-blueGray-500 text-sm ">{{ image.User.email }}</h4>
                         </div>
                       </div>
                     </li>
@@ -199,6 +197,9 @@
               </div>
             </div>
           </div>
+
+          <img v-if="loader" src="../assets/img/loader.gif" width="120" alt="loader" style="margin-left: calc(50% - 60px)" />
+
         </div>
       </section>
 
@@ -235,19 +236,86 @@
 import Navbar from "@/components/Navbars/AuthNavbar.vue";
 import FooterComponent from "@/components/Footers/FooterSmall.vue";
 
+import { getAllImage, getImageByUser } from "../api/files";
+
 export default {
   data() {
     return {
-      user: {},
+      all_Images: null,
+      loader: false,
+      filter: "desc",
+      filterToDisplay: "Descending",
+      mine: false,
+      token: localStorage.getItem("token"),
     };
   },
   mounted(){
-    this.user = localStorage.getItem("user");
+
+    if (!this.mine){
+      this.getImagesFunc(localStorage.getItem("token"), this.filter)
+    } else {
+      this.getImageByUserFunc(localStorage.getItem("token"), this.filter)
+    }
   },
   components: {
     Navbar,
     FooterComponent,
   },
+  methods: {
+    goTo: function(val){
+      this.$router.push({ name: val })
+    },
+    getImagesFunc: function(token, filter){
+      this.mine=false;
+      this.loader = true;
+      getAllImage(token, filter).then((result) => {
+        console.log("images_data", result);
+        if (result.status == 200){
+          this.all_Images = result.data;
+          filter == 'asc' ? this.filterToDisplay='Ascending':this.filterToDisplay='Descending';
+        } else {
+          alert(result.message);
+          this.goTo("Login");
+        }
+
+        this.loader = false;
+
+      })
+      .catch((err) =>{
+        console.log('ERROR: ', err);
+        this.loader = false;
+      })
+    },
+    filterFunc: function(filter_val){
+      this.filter = filter_val;
+      if (!this.mine){
+        this.getImagesFunc(localStorage.getItem("token"), this.filter)
+      } else {
+        this.getImageByUserFunc(localStorage.getItem("token"), this.filter)
+      }
+    },
+    getImageByUserFunc: function(token, filter){
+      this.mine=true;
+      this.loader = true;
+      getImageByUser(token, filter).then((result) => {
+        console.log("images_data", result);
+        if (result.status == 200){
+          this.all_Images = result.data;
+          filter == 'asc' ? this.filterToDisplay='Ascending':this.filterToDisplay='Descending';
+        } else {
+          alert(result.message);
+          this.goTo("Login");
+        }
+
+        this.loader = false;
+
+      })
+      .catch((err) =>{
+        console.log('ERROR: ', err);
+        this.loader = false;
+      })
+    }
+  }
 };
 </script>
 

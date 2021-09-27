@@ -115,14 +115,11 @@
 import github from "@/assets/img/github.svg";
 import google from "@/assets/img/google.svg";
 
-import { login } from "../../api/login";
-
-import imgTest from "/Users/vianney.rwicha/Documents/Work/Ujat Care/UjatCare_test/static/uploads/8wRb12xIdZVsc2rTTm1t4gpU2rTCkVlo.jpg";
+import { login } from "../../api/user";
 
 export default {
   data() {
     return {
-      imgTest,
       github,
       google,
       alertOpen: null,
