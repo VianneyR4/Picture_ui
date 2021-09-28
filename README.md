@@ -2,6 +2,8 @@
 
 Use this link to quickly test the application with `Integrated API`.
 
+Note: to use this deployed `Client side` you have to run the `Server side` (`API server`) before... (see how: `https://github.com/VianneyR4/Picture_api`)
+
 # Picture API
 
 I wanted to build a website(or any other client with User Interface) and web service that will have 
