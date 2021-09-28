@@ -3,7 +3,8 @@ import axios from "axios";
 // import qs from "qs";
 // import store from "../store"
 
-const API_URL = "http://127.0.0.1:3000/api/v1";
+// const API_URL = "http://127.0.0.1:3000/api/v1";
+const API_URL = "https://picture-api-app.herokuapp.com/api/v1";
 
 
 /**

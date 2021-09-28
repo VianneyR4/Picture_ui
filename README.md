@@ -16,7 +16,9 @@ I wanted to build a website(or any other client with User Interface) and web ser
 - Also the important part is that Api should not allow posting images to `api` without `authentication`. 
 
 
-## Project setup
+## Project setup in your local
+
+If you dont want to use the deployed `Application` please follow this staps below to install the application in your local
 
 1. Install `nodejs` if you don't have it installed ( check it in the `terminal`, type `$ node -v` or `$ npm -v`)
 2. Clone the project from the terminal (type `$ git clone https://github.com/VianneyR4/Picture_ui.git`) or you can download a ZIP file
@@ -34,6 +36,11 @@ npm install
 npm run serve
 ```
 
+
+Note: By default i link this `Client side` to the deployed `API server`, it's mean you will dont have to configer any thing for the `Server side` in your local, what you have to do is just to run your `Client side server`.
+
+But if you want you can change it and link to the `Local API server`, and for that make sure that the `API Server` in your `Local` is `Running` before to start using the `Client app`.  if you don't have the `API Server` for this app please folow this link `https://github.com/VianneyR4/Picture_api` and proccess the staps from the `README.MD` file. and then change the link of the deployed `API server` to the link of the local `API server`. (in `./src/api/files.js` and `./src/api/user.js`, the defaul `local link` in commented )
+
 ### Compiles and minifies for production
 
 1. Go back again in the `terminal` and type the below cmd to build the `Client app` for the production 
@@ -41,9 +48,6 @@ npm run serve
 ```
 npm run build
 ```
-
-
-Note: Make sure that the `API Server` is `ON` before to start using the `Client app`.  if you don't have the `API Server` for this app please folow this link `https://github.com/VianneyR4/Picture_api` and proccess the staps from the `README.MD` file. 
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
