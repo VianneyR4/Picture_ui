@@ -144,7 +144,7 @@
                 <img
                   alt="..."
                   class="max-w-full rounded-lg shadow-lg"
-                  :src="'http://localhost:3000/'+image.image"
+                  :src="'https://picture-api-app.herokuapp.com/'+image.image"
                 />
               </div>
               <div class="my-image-detail w-full ml-auto mr-auto px-4">
